@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>천중 야구 | CPL</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, "Malgun Gothic", sans-serif;
+    background: #f4f6f9;
+    color: #20242b;
+}
+
+/* 상단 */
+.top {
+    background: #ffffff;
+    border-bottom: 1px solid #e1e5ea;
+}
+
+.top-inner {
+    max-width: 1200px;
+    margin: auto;
+    padding: 22px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 800;
+    color: #111827;
+}
+
+.logo span {
+    color: #1677ff;
+}
+
+.season {
+    color: #777;
+    font-size: 14px;
+}
+
+/* 메뉴 */
+nav {
+    background: #142033;
+}
+
+.nav-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    overflow-x: auto;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 17px 24px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    background: #2468c7;
+}
+
+nav a.active {
+    background: #1677ff;
+}
+
+/* 메인 */
+main {
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 0 25px;
+}
+
+/* 경기 배너 */
+.hero {
+    background: linear-gradient(135deg, #142033, #1e4f91);
+    color: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 25px;
+}
+
+.hero-title {
+    font-size: 14px;
+    color: #b9d6ff;
+    font-weight: bold;
+}
+
+.hero h1 {
+    margin: 8px 0;
+    font-size: 34px;
+}
+
+.hero p {
+    color: #dce8f8;
+}
+
+/* 경기 */
+.game-box {
+    background: white;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.live {
+    color: #e53935;
+    font-weight: bold;
+}
+
+.match {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 45px;
+    padding: 30px 10px;
+    text-align: center;
+}
+
+.team {
+    min-width: 150px;
+}
+
+.team-icon {
+    font-size: 48px;
+}
+
+.team-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.vs {
+    font-size: 20px;
+    color: #888;
+    font-weight: bold;
+}
+
+/* 3칸 */
+.grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 18px;
+    border-left: 5px solid #1677ff;
+    padding-left: 10px;
+}
+
+/* 순위 */
+.rank {
+    display: grid;
+    grid-template-columns: 35px 1fr 50px;
+    padding: 13px 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.rank:last-child {
+    border-bottom: none;
+}
+
+.rank-number {
+    font-weight: bold;
+}
+
+.rank-team {
+    font-weight: bold;
+}
+
+.points {
+    text-align: right;
+    font-weight: bold;
+    color: #1677ff;
+}
+
+/* 일정 */
+.schedule-item {
+    padding: 13px 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.schedule-item:last-child {
+    border-bottom: none;
+}
+
+.date {
+    color: #888;
+    font-size: 13px;
+}
+
+.match-small {
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* 뉴스 */
+.news {
+    background: white;
+    border-radius: 14px;
+    padding: 22px;
+    margin-top: 20px;
+}
+
+.news-item {
+    padding: 16px 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}
+
+.news-item h3 {
+    margin: 5px 0;
+}
+
+.news-date {
+    color: #999;
+    font-size: 13px;
+}
+
+/* 버튼 */
+.button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 17px;
+    background: #1677ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.button:hover {
+    background: #0d5fd1;
+}
+
+/* 하단 */
+footer {
+    margin-top: 40px;
+    background: #142033;
+    color: #aeb8c7;
+    text-align: center;
+    padding: 30px;
+    font-size: 13px;
+}
+
+/* 휴대폰 */
+@media (max-width: 800px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .top-inner {
+        padding: 18px;
+    }
+
+    main {
+        padding: 0 15px;
+    }
+
+    .match {
+        gap: 15px;
+    }
+
+    .team {
+        min-width: 100px;
+    }
+
+    .hero h1 {
+        font-size: 27px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 상단 -->
+<div class="top">
+    <div class="top-inner">
+        <div class="logo">⚾ <span>천중</span> 야구</div>
+        <div class="season">CPL 2026 SEASON</div>
+    </div>
+</div>
+
+<!-- 메뉴 -->
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="active">홈</a>
+        <a href="games.html">경기</a>
+        <a href="schedule.html">일정</a>
+        <a href="standings.html">순위</a>
+        <a href="teams.html">팀</a>
+        <a href="players.html">선수</a>
+        <a href="records.html">기록</a>
+        <a href="news.html">뉴스</a>
+    </div>
+</nav>
+
+<main>
+
+<!-- 메인 배너 -->
+<section class="hero">
+    <div class="hero-title">CHEONJUNG PREMIER LEAGUE</div>
+    <h1>⚾ One Season. One Champion.</h1>
+    <p>천중 야구 공식 스포츠 사이트</p>
+</section>
+
+<!-- 다음 경기 -->
+<section class="game-box">
+
+    <div class="game-header">
+        <strong>⚾ 다음 경기</strong>
+        <span class="live">● 경기 예정</span>
+    </div>
+
+    <div class="match">
+
+        <div class="team">
+            <div class="team-icon">🔴</div>
+            <div class="team-name">준열</div>
+        </div>
+
+        <div class="vs">
+            VS
+        </div>
+
+        <div class="team">
+            <div class="team-icon">🦅</div>
+            <div class="team-name">시환</div>
+        </div>
+
+    </div>
+
+    <div style="text-align:center;">
+        CPL 정규시즌 · 1차전
+    </div>
+
+    <div style="text-align:center;">
+        <a class="button" href="games.html">경기 페이지</a>
+    </div>
+
+</section>
+
+<!-- 순위 / 일정 / 팀 -->
+<div class="grid">
+
+    <!-- 순위 -->
+    <section class="card">
+
+        <div class="card-title">🏆 CPL 순위</div>
+
+        <div class="rank">
+            <div class="rank-number">1</div>
+            <div class="rank-team">해찬</div>
+            <div class="points">0점</div>
+        </div>
+
+        <div class="rank">
+            <div class="rank-number">2</div>
+            <div class="rank-team">시환</div>
+            <div class="points">0점</div>
+        </div>
+
+        <div class="rank">
+            <div class="rank-number">3</div>
+            <div class="rank-team">재우</div>
+            <div class="points">0점</div>
+        </div>
+
+        <div class="rank">
+            <div class="rank-number">4</div>
+            <div class="rank-team">준열</div>
+            <div class="points">0점</div>
+        </div>
+
+        <a class="button" href="standings.html">전체 순위</a>
+
+    </section>
+
+    <!-- 일정 -->
+    <section class="card">
+
+        <div class="card-title">📅 일정</div>
+
+        <div class="schedule-item">
+            <div class="date">1차전</div>
+            <div class="match-small">준열 VS 시환</div>
+        </div>
+
+        <div class="schedule-item">
+            <div class="date">2차전</div>
+            <div class="match-small">해찬 VS 재우</div>
+        </div>
+
+        <div class="schedule-item">
+            <div class="date">3차전</div>
+            <div class="match-small">해찬 VS 준열</div>
+        </div>
+
+        <a class="button" href="schedule.html">전체 일정</a>
+
+    </section>
+
+    <!-- 팀 -->
+    <section class="card">
+
+        <div class="card-title">👥 팀</div>
+
+        <p>🦁 <strong>해찬</strong></p>
+        <p>🦅 <strong>시환</strong></p>
+        <p>🌈 <strong>재우</strong></p>
+        <p>🔴 <strong>준열</strong></p>
+
+        <a class="button" href="teams.html">팀 정보</a>
+
+    </section>
+
+</div>
+
+<!-- 뉴스 -->
+<section class="news">
+
+    <div class="card-title">📰 천중 야구 NEWS</div>
+
+    <div class="news-item">
+        <div class="news-date">CPL 2026</div>
+        <h3>CPL 정규시즌 12경기 일정 공개</h3>
+        <p>천중 야구 2026 시즌 공식 일정이 공개되었습니다.</p>
+    </div>
+
+    <div class="news-item">
+        <div class="news-date">CPL 공식</div>
+        <h3>천중 야구 공식 사이트 오픈</h3>
+        <p>경기, 일정, 순위, 팀, 선수, 기록과 뉴스를 한곳에서 확인하세요.</p>
+    </div>
+
+    <div class="news-item">
+        <div class="news-date">경기 소식</div>
+        <h3>다음 경기 선발 예고</h3>
+        <p>준열 VS 시환의 경기가 예정되어 있습니다.</p>
+    </div>
+
+    <a class="button" href="news.html">뉴스 더보기</a>
+
+</section>
+
+</main>
+
+<footer>
+    천중 야구 공식 사이트 · CPL<br>
+    Cheonjung Premier League 2026
+</footer>
+
+</body>
+</html>
