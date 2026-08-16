@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPL 관리자</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f4f6;
+  color:#111827;
+}
+
+header{
+  background:#111827;
+  color:white;
+  padding:22px;
+}
+
+header h1{margin:0}
+header p{margin:6px 0 0;color:#d1d5db}
+
+.container{
+  max-width:900px;
+  margin:25px auto;
+  padding:0 16px;
+}
+
+.card{
+  background:white;
+  padding:22px;
+  margin-bottom:18px;
+  border-radius:16px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+h2{
+  margin-top:0;
+  border-bottom:1px solid #e5e7eb;
+  padding-bottom:12px;
+}
+
+label{
+  display:block;
+  margin:14px 0 6px;
+  font-weight:bold;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:11px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  font-size:15px;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:12px 18px;
+  margin-top:15px;
+  background:#111827;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button.delete{
+  background:#dc2626;
+}
+
+button.secondary{
+  background:#6b7280;
+}
+
+.section-title{
+  font-size:14px;
+  color:#6b7280;
+  margin-bottom:10px;
+}
+
+.notice{
+  background:#eef2ff;
+  padding:12px;
+  border-radius:8px;
+  margin-top:12px;
+}
+
+@media(max-width:600px){
+  .row{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>⚾ CPL 관리자</h1>
+  <p>Cheonjung Premier League · 2026</p>
+</header>
+
+<div class="container">
+
+<!-- 로그인 -->
+<div class="card">
+  <h2>🔐 관리자 로그인</h2>
+
+  <label>아이디</label>
+  <input type="text" placeholder="관리자 아이디">
+
+  <label>비밀번호</label>
+  <input type="password" placeholder="비밀번호">
+
+  <button>로그인</button>
+
+  <div class="notice">
+    관리자 전용 화면입니다.
+  </div>
+</div>
+
+
+<!-- 메인 -->
+<div class="card">
+  <h2>🏠 메인 화면 관리</h2>
+
+  <label>메인 제목</label>
+  <input type="text" placeholder="천중 리그">
+
+  <label>메인 문구</label>
+  <input type="text" placeholder="One Season. One Champion.">
+
+  <label>메인 공지</label>
+  <textarea placeholder="사이트에 표시할 공지"></textarea>
+
+  <button>💾 메인 정보 저장</button>
+</div>
+
+
+<!-- 경기 -->
+<div class="card">
+  <h2>⚾ 경기 관리</h2>
+
+  <label>경기 날짜</label>
+  <input type="date">
+
+  <label>경기 시간</label>
+  <input type="time">
+
+  <div class="row">
+    <div>
+      <label>팀 1</label>
+      <select>
+        <option>해찬</option>
+        <option>시환</option>
+        <option>재우</option>
+        <option>준열</option>
+      </select>
+    </div>
+
+    <div>
+      <label>팀 1 점수</label>
+      <input type="number" min="0">
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label>팀 2</label>
+      <select>
+        <option>준열</option>
+        <option>해찬</option>
+        <option>시환</option>
+        <option>재우</option>
+      </select>
+    </div>
+
+    <div>
+      <label>팀 2 점수</label>
+      <input type="number" min="0">
+    </div>
+  </div>
+
+  <label>경기 설명</label>
+  <textarea placeholder="경기 내용을 입력"></textarea>
+
+  <button>➕ 경기 추가</button>
+  <button class="secondary">✏️ 경기 수정</button>
+  <button class="delete">🗑️ 경기 삭제</button>
+</div>
+
+
+<!-- 일정 -->
+<div class="card">
+  <h2>📅 일정 관리</h2>
+
+  <label>경기 날짜</label>
+  <input type="date">
+
+  <label>경기 시간</label>
+  <input type="time">
+
+  <label>대진</label>
+  <input type="text" placeholder="해찬 vs 준열">
+
+  <button>💾 일정 저장</button>
+  <button class="delete">🗑️ 일정 삭제</button>
+</div>
+
+
+<!-- 순위 -->
+<div class="card">
+  <h2>🏆 순위 관리</h2>
+
+  <div class="section-title">
+    기본적으로 경기 결과를 기준으로 자동 계산되도록 구성
+  </div>
+
+  <label>팀</label>
+  <select>
+    <option>해찬</option>
+    <option>시환</option>
+    <option>재우</option>
+    <option>준열</option>
+  </select>
+
+  <label>승</label>
+  <input type="number" min="0">
+
+  <label>무</label>
+  <input type="number" min="0">
+
+  <label>패</label>
+  <input type="number" min="0">
+
+  <button>💾 순위 저장</button>
+</div>
+
+
+<!-- 팀 -->
+<div class="card">
+  <h2>👥 팀 관리</h2>
+
+  <label>팀 선택</label>
+  <select>
+    <option>해찬</option>
+    <option>시환</option>
+    <option>재우</option>
+    <option>준열</option>
+  </select>
+
+  <label>팀 이름</label>
+  <input type="text">
+
+  <label>팀 소개</label>
+  <textarea></textarea>
+
+  <label>팀 색상</label>
+  <input type="text" placeholder="예: 파랑">
+
+  <button>💾 팀 정보 저장</button>
+</div>
+
+
+<!-- 선수 -->
+<div class="card">
+  <h2>👤 선수 관리</h2>
+
+  <label>선수 이름</label>
+  <input type="text">
+
+  <label>소속 팀</label>
+  <select>
+    <option>해찬</option>
+    <option>시환</option>
+    <option>재우</option>
+    <option>준열</option>
+  </select>
+
+  <label>포지션</label>
+  <input type="text">
+
+  <label>선수 소개</label>
+  <textarea></textarea>
+
+  <button>💾 선수 정보 저장</button>
+</div>
+
+
+<!-- 기록 -->
+<div class="card">
+  <h2>📊 기록 관리</h2>
+
+  <label>선수</label>
+  <input type="text">
+
+  <div class="row">
+    <div>
+      <label>경기 수</label>
+      <input type="number" min="0">
+    </div>
+
+    <div>
+      <label>안타</label>
+      <input type="number" min="0">
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label>홈런</label>
+      <input type="number" min="0">
+    </div>
+
+    <div>
+      <label>타점</label>
+      <input type="number" min="0">
+    </div>
+  </div>
+
+  <button>💾 기록 저장</button>
+</div>
+
+
+<!-- 뉴스 -->
+<div class="card">
+  <h2>📰 뉴스 관리</h2>
+
+  <label>뉴스 날짜</label>
+  <input type="date">
+
+  <label>뉴스 제목</label>
+  <input type="text" placeholder="CPL 경기 결과">
+
+  <label>뉴스 내용</label>
+  <textarea placeholder="뉴스 내용을 입력"></textarea>
+
+  <button>📰 뉴스 추가</button>
+  <button class="secondary">✏️ 뉴스 수정</button>
+  <button class="delete">🗑️ 뉴스 삭제</button>
+</div>
+
+
+<!-- 리그 정보 -->
+<div class="card">
+  <h2>⚙️ 리그 정보 관리</h2>
+
+  <label>리그 이름</label>
+  <input type="text" value="천중 리그">
+
+  <label>영문 이름</label>
+  <input type="text" value="Cheonjung Premier League">
+
+  <label>시즌</label>
+  <input type="text" value="2026 시즌">
+
+  <label>슬로건</label>
+  <input type="text" value="One Season. One Champion.">
+
+  <label>리그 소개</label>
+  <textarea></textarea>
+
+  <button>💾 리그 정보 저장</button>
+</div>
+
+</div>
+
+</body>
+</html>
