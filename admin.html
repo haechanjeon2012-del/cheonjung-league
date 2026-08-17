@@ -3,91 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CPL 통합 관리자</title>
+<title>CPL 관리자</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f3f4f6;
-    color:#111827;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
 }
 
-header{
-    background:#111827;
-    color:white;
-    padding:20px;
-    text-align:center;
+header {
+    background: #111827;
+    color: white;
+    padding: 20px;
+    text-align: center;
 }
 
-.container{
-    max-width:1000px;
-    margin:25px auto;
-    padding:15px;
+main {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 15px;
 }
 
-.card{
-    background:white;
-    padding:25px;
-    border-radius:15px;
-    margin-bottom:20px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
+.box {
+    background: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 12px;
 }
 
-.menu{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:10px;
+button {
+    padding: 12px;
+    margin: 5px;
+    border: 0;
+    border-radius: 8px;
+    background: #111827;
+    color: white;
+    cursor: pointer;
 }
 
-button{
-    border:0;
-    padding:13px;
-    border-radius:8px;
-    background:#111827;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0 12px;
+    box-sizing: border-box;
 }
 
-button:hover{
-    opacity:.85;
+.page {
+    display: none;
 }
 
-input,select,textarea{
-    width:100%;
-    padding:11px;
-    margin:7px 0 14px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:15px;
+.page.active {
+    display: block;
 }
 
-textarea{
-    min-height:100px;
+.hidden {
+    display: none;
 }
 
-.section{
-    display:none;
-}
-
-.section.active{
-    display:block;
-}
-
-.hidden{
-    display:none;
-}
-
-.message{
-    margin-top:15px;
-    font-weight:bold;
-}
-
-.danger{
-    background:#dc2626;
+#message {
+    margin-top: 15px;
+    font-weight: bold;
 }
 </style>
 </head>
@@ -95,326 +71,258 @@ textarea{
 <body>
 
 <header>
-<h1>⚾ CPL 통합 관리자</h1>
-<p>Cheonjung Premier League 2026</p>
+    <h1>⚾ CPL 관리자</h1>
+    <p>Cheonjung Premier League</p>
 </header>
 
-<div class="container">
+<main>
 
 <!-- 로그인 -->
-<div id="loginBox" class="card">
 
-<h2>🔐 관리자 로그인</h2>
+<div id="login" class="box">
 
-<label>아이디</label>
-<input id="adminId" placeholder="관리자 아이디">
+    <h2>🔐 관리자 로그인</h2>
 
-<label>비밀번호</label>
-<input id="adminPassword" type="password" placeholder="비밀번호">
+    <input id="adminId" placeholder="아이디">
 
-<button onclick="login()">로그인</button>
+    <input
+        id="adminPassword"
+        type="password"
+        placeholder="비밀번호"
+    >
 
-<div id="loginMessage" class="message"></div>
+    <button onclick="loginAdmin()">로그인</button>
 
-</div>
-
-
-<!-- 관리자 -->
-<div id="adminPanel" class="hidden">
-
-<div class="card">
-
-<h2>관리 메뉴</h2>
-
-<div class="menu">
-
-<button onclick="openPage('home')">🏠 홈</button>
-<button onclick="openPage('games')">⚾ 경기</button>
-<button onclick="openPage('schedule')">📅 일정</button>
-<button onclick="openPage('standings')">🏆 순위</button>
-
-<button onclick="openPage('teams')">👥 팀</button>
-<button onclick="openPage('players')">👤 선수</button>
-<button onclick="openPage('records')">📊 기록</button>
-<button onclick="openPage('news')">📰 뉴스</button>
-
-</div>
+    <p id="loginMessage"></p>
 
 </div>
 
 
-<!-- 홈 -->
-<div id="home" class="section active card">
+<!-- 관리자 화면 -->
 
-<h2>🏠 홈 관리</h2>
+<div id="admin" class="hidden">
 
-<label>사이트 제목</label>
-<input id="homeTitle">
+    <div class="box">
 
-<label>메인 공지</label>
-<textarea id="homeNotice"></textarea>
+        <h2>관리 메뉴</h2>
 
-<label>메인 배너</label>
-<input id="homeBanner">
+        <button onclick="showPage('home')">🏠 홈</button>
+        <button onclick="showPage('games')">⚾ 경기</button>
+        <button onclick="showPage('schedule')">📅 일정</button>
+        <button onclick="showPage('standings')">🏆 순위</button>
+        <button onclick="showPage('teams')">👥 팀</button>
+        <button onclick="showPage('players')">👤 선수</button>
+        <button onclick="showPage('records')">📊 기록</button>
+        <button onclick="showPage('news')">📰 뉴스</button>
 
-<button onclick="save('site_settings',{
-title:homeTitle.value,
-notice:homeNotice.value,
-banner:homeBanner.value
-})">
-💾 홈 저장
-</button>
+    </div>
 
-<div id="homeMsg" class="message"></div>
+
+    <!-- 홈 -->
+
+    <div id="home" class="box page active">
+
+        <h2>🏠 홈 관리</h2>
+
+        <label>사이트 제목</label>
+        <input id="homeTitle">
+
+        <label>공지</label>
+        <textarea id="homeNotice"></textarea>
+
+        <button onclick="saveHome()">
+            💾 저장
+        </button>
+
+    </div>
+
+
+    <!-- 경기 -->
+
+    <div id="games" class="box page">
+
+        <h2>⚾ 경기 관리</h2>
+
+        <label>날짜</label>
+        <input id="gameDate" type="date">
+
+        <label>팀 1</label>
+        <input id="gameTeam1">
+
+        <label>팀 1 점수</label>
+        <input id="gameScore1" type="number">
+
+        <label>팀 2</label>
+        <input id="gameTeam2">
+
+        <label>팀 2 점수</label>
+        <input id="gameScore2" type="number">
+
+        <label>경기 내용</label>
+        <textarea id="gameDescription"></textarea>
+
+        <button onclick="saveGame()">
+            💾 경기 저장
+        </button>
+
+    </div>
+
+
+    <!-- 일정 -->
+
+    <div id="schedule" class="box page">
+
+        <h2>📅 일정 관리</h2>
+
+        <label>날짜</label>
+        <input id="scheduleDate" type="date">
+
+        <label>시간</label>
+        <input id="scheduleTime" type="time">
+
+        <label>팀 1</label>
+        <input id="scheduleTeam1">
+
+        <label>팀 2</label>
+        <input id="scheduleTeam2">
+
+        <button onclick="saveSchedule()">
+            💾 일정 저장
+        </button>
+
+    </div>
+
+
+    <!-- 순위 -->
+
+    <div id="standings" class="box page">
+
+        <h2>🏆 순위 관리</h2>
+
+        <label>팀</label>
+        <input id="standingTeam">
+
+        <label>승</label>
+        <input id="standingWins" type="number">
+
+        <label>무</label>
+        <input id="standingDraws" type="number">
+
+        <label>패</label>
+        <input id="standingLosses" type="number">
+
+        <label>승점</label>
+        <input id="standingPoints" type="number">
+
+        <button onclick="saveStanding()">
+            💾 순위 저장
+        </button>
+
+    </div>
+
+
+    <!-- 팀 -->
+
+    <div id="teams" class="box page">
+
+        <h2>👥 팀 관리</h2>
+
+        <label>팀 이름</label>
+        <input id="teamName">
+
+        <label>팀 색상</label>
+        <input id="teamColor">
+
+        <label>팀 소개</label>
+        <textarea id="teamDescription"></textarea>
+
+        <button onclick="saveTeam()">
+            💾 팀 저장
+        </button>
+
+    </div>
+
+
+    <!-- 선수 -->
+
+    <div id="players" class="box page">
+
+        <h2>👤 선수 관리</h2>
+
+        <label>선수 이름</label>
+        <input id="playerName">
+
+        <label>팀</label>
+        <input id="playerTeam">
+
+        <label>포지션</label>
+        <input id="playerPosition">
+
+        <label>소개</label>
+        <textarea id="playerDescription"></textarea>
+
+        <button onclick="savePlayer()">
+            💾 선수 저장
+        </button>
+
+    </div>
+
+
+    <!-- 기록 -->
+
+    <div id="records" class="box page">
+
+        <h2>📊 기록 관리</h2>
+
+        <label>선수</label>
+        <input id="recordPlayer">
+
+        <label>팀</label>
+        <input id="recordTeam">
+
+        <label>안타</label>
+        <input id="recordHits" type="number">
+
+        <label>홈런</label>
+        <input id="recordHomeRuns" type="number">
+
+        <label>타점</label>
+        <input id="recordRBI" type="number">
+
+        <button onclick="saveRecord()">
+            💾 기록 저장
+        </button>
+
+    </div>
+
+
+    <!-- 뉴스 -->
+
+    <div id="news" class="box page">
+
+        <h2>📰 뉴스 관리</h2>
+
+        <label>날짜</label>
+        <input id="newsDate" type="date">
+
+        <label>제목</label>
+        <input id="newsTitle">
+
+        <label>내용</label>
+        <textarea id="newsContent"></textarea>
+
+        <button onclick="saveNews()">
+            💾 뉴스 저장
+        </button>
+
+    </div>
+
+
+    <p id="message"></p>
 
 </div>
 
-
-<!-- 경기 -->
-<div id="games" class="section card">
-
-<h2>⚾ 경기 관리</h2>
-
-<label>경기 날짜</label>
-<input id="gameDate" type="date">
-
-<label>팀 1</label>
-<select id="gameTeam1">
-<option>해찬</option>
-<option>시환</option>
-<option>재우</option>
-<option>준열</option>
-</select>
-
-<label>팀 1 점수</label>
-<input id="gameScore1" type="number" min="0">
-
-<label>팀 2</label>
-<select id="gameTeam2">
-<option>준열</option>
-<option>해찬</option>
-<option>시환</option>
-<option>재우</option>
-</select>
-
-<label>팀 2 점수</label>
-<input id="gameScore2" type="number" min="0">
-
-<label>경기 내용</label>
-<textarea id="gameDescription"></textarea>
-
-<button onclick="save('games',{
-game_date:gameDate.value,
-team1:gameTeam1.value,
-score1:Number(gameScore1.value),
-team2:gameTeam2.value,
-score2:Number(gameScore2.value),
-description:gameDescription.value
-})">
-💾 경기 저장
-</button>
-
-<div id="gamesMsg" class="message"></div>
-
-</div>
-
-
-<!-- 일정 -->
-<div id="schedule" class="section card">
-
-<h2>📅 일정 관리</h2>
-
-<label>날짜</label>
-<input id="scheduleDate" type="date">
-
-<label>시간</label>
-<input id="scheduleTime" type="time">
-
-<label>홈 팀</label>
-<input id="scheduleTeam1">
-
-<label>원정 팀</label>
-<input id="scheduleTeam2">
-
-<button onclick="save('schedules',{
-game_date:scheduleDate.value,
-game_time:scheduleTime.value,
-team1:scheduleTeam1.value,
-team2:scheduleTeam2.value
-})">
-💾 일정 저장
-</button>
-
-<div id="scheduleMsg" class="message"></div>
-
-</div>
-
-
-<!-- 순위 -->
-<div id="standings" class="section card">
-
-<h2>🏆 순위 관리</h2>
-
-<label>팀</label>
-<input id="standingTeam">
-
-<label>승</label>
-<input id="standingWins" type="number">
-
-<label>무</label>
-<input id="standingDraws" type="number">
-
-<label>패</label>
-<input id="standingLosses" type="number">
-
-<label>승점</label>
-<input id="standingPoints" type="number">
-
-<button onclick="save('standings',{
-team:standingTeam.value,
-wins:Number(standingWins.value),
-draws:Number(standingDraws.value),
-losses:Number(standingLosses.value),
-points:Number(standingPoints.value)
-})">
-💾 순위 저장
-</button>
-
-<div id="standingsMsg" class="message"></div>
-
-</div>
-
-
-<!-- 팀 -->
-<div id="teams" class="section card">
-
-<h2>👥 팀 관리</h2>
-
-<label>팀 이름</label>
-<input id="teamName">
-
-<label>팀 색상</label>
-<input id="teamColor">
-
-<label>팀 소개</label>
-<textarea id="teamDescription"></textarea>
-
-<button onclick="save('teams',{
-name:teamName.value,
-color:teamColor.value,
-description:teamDescription.value
-})">
-💾 팀 저장
-</button>
-
-<div id="teamsMsg" class="message"></div>
-
-</div>
-
-
-<!-- 선수 -->
-<div id="players" class="section card">
-
-<h2>👤 선수 관리</h2>
-
-<label>선수 이름</label>
-<input id="playerName">
-
-<label>팀</label>
-<input id="playerTeam">
-
-<label>포지션</label>
-<input id="playerPosition">
-
-<label>선수 소개</label>
-<textarea id="playerDescription"></textarea>
-
-<button onclick="save('players',{
-name:playerName.value,
-team:playerTeam.value,
-position:playerPosition.value,
-description:playerDescription.value
-})">
-💾 선수 저장
-</button>
-
-<div id="playersMsg" class="message"></div>
-
-</div>
-
-
-<!-- 기록 -->
-<div id="records" class="section card">
-
-<h2>📊 기록 관리</h2>
-
-<label>선수</label>
-<input id="recordPlayer">
-
-<label>팀</label>
-<input id="recordTeam">
-
-<label>안타</label>
-<input id="recordHits" type="number">
-
-<label>홈런</label>
-<input id="recordHR" type="number">
-
-<label>타점</label>
-<input id="recordRBI" type="number">
-
-<label>승리</label>
-<input id="recordWins" type="number">
-
-<label>패배</label>
-<input id="recordLosses" type="number">
-
-<button onclick="save('records',{
-player:recordPlayer.value,
-team:recordTeam.value,
-hits:Number(recordHits.value),
-home_runs:Number(recordHR.value),
-rbi:Number(recordRBI.value),
-wins:Number(recordWins.value),
-losses:Number(recordLosses.value)
-})">
-💾 기록 저장
-</button>
-
-<div id="recordsMsg" class="message"></div>
-
-</div>
-
-
-<!-- 뉴스 -->
-<div id="news" class="section card">
-
-<h2>📰 뉴스 관리</h2>
-
-<label>날짜</label>
-<input id="newsDate" type="date">
-
-<label>뉴스 제목</label>
-<input id="newsTitle">
-
-<label>뉴스 내용</label>
-<textarea id="newsContent"></textarea>
-
-<button onclick="save('news',{
-news_date:newsDate.value,
-title:newsTitle.value,
-content:newsContent.value
-})">
-💾 뉴스 저장
-</button>
-
-<div id="newsMsg" class="message"></div>
-
-</div>
-
-</div>
-
-</div>
+</main>
 
 
 <script>
@@ -427,130 +335,487 @@ const SUPABASE_URL =
 "https://eyxffvsoohftthklhoex.supabase.co";
 
 const SUPABASE_KEY =
-"여기에_네_게시_가능한_키";
+"여기에_네_PUBLISHABLE_KEY";
 
 
 /* =========================
-   관리자 로그인
+   로그인
 ========================= */
 
-function login(){
+function loginAdmin() {
 
-const id =
-document.getElementById("adminId").value;
+    const id =
+        document.getElementById("adminId").value;
 
-const password =
-document.getElementById("adminPassword").value;
+    const password =
+        document.getElementById("adminPassword").value;
 
-if(id==="260820" && password==="CPL2026"){
+    if (
+        id === "260820" &&
+        password === "CPL2026"
+    ) {
 
-document
-.getElementById("loginBox")
-.classList.add("hidden");
+        document
+            .getElementById("login")
+            .classList.add("hidden");
 
-document
-.getElementById("adminPanel")
-.classList.remove("hidden");
+        document
+            .getElementById("admin")
+            .classList.remove("hidden");
 
-}else{
+    } else {
 
-document
-.getElementById("loginMessage")
-.innerText=
-"❌ 아이디 또는 비밀번호가 틀렸습니다.";
+        document
+            .getElementById("loginMessage")
+            .innerText =
+            "❌ 로그인 정보가 틀렸습니다.";
 
-}
-
-}
-
-
-/* =========================
-   메뉴 열기
-========================= */
-
-function openPage(id){
-
-document
-.querySelectorAll(".section")
-.forEach(x=>{
-x.classList.remove("active");
-});
-
-document
-.getElementById(id)
-.classList.add("active");
-
+    }
 }
 
 
 /* =========================
-   Supabase 저장
+   메뉴
 ========================= */
 
-async function save(table,data){
+function showPage(id) {
 
-try{
+    const pages =
+        document.querySelectorAll(".page");
 
-const response =
-await fetch(
-SUPABASE_URL+
-"/rest/v1/"+
-table,
-{
-method:"POST",
+    pages.forEach(page => {
+        page.classList.remove("active");
+    });
 
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":
-"Bearer "+SUPABASE_KEY,
-"Content-Type":
-"application/json",
-"Prefer":
-"return=representation"
-},
-
-body:
-JSON.stringify(data)
-
-}
-);
-
-const result =
-await response.text();
-
-console.log(result);
-
-const msg =
-document.getElementById(table+"Msg");
-
-if(response.ok){
-
-msg.innerText=
-"✅ 저장되었습니다.";
-
-}else{
-
-msg.innerText=
-"❌ 저장 실패";
-
-console.error(result);
-
+    document
+        .getElementById(id)
+        .classList.add("active");
 }
 
-}catch(error){
 
-console.error(error);
+/* =========================
+   Supabase 저장 함수
+========================= */
 
-const msg =
-document.getElementById(table+"Msg");
+async function insertData(table, data) {
 
-if(msg){
-msg.innerText=
-"❌ Supabase 연결 오류";
+    const response =
+        await fetch(
+            SUPABASE_URL +
+            "/rest/v1/" +
+            table,
+            {
+                method: "POST",
+
+                headers: {
+                    "apikey": SUPABASE_KEY,
+
+                    "Authorization":
+                        "Bearer " + SUPABASE_KEY,
+
+                    "Content-Type":
+                        "application/json",
+
+                    "Prefer":
+                        "return=representation"
+                },
+
+                body:
+                    JSON.stringify(data)
+            }
+        );
+
+    if (!response.ok) {
+
+        const error =
+            await response.text();
+
+        throw new Error(error);
+    }
+
+    return await response.json();
 }
 
+
+/* =========================
+   홈
+========================= */
+
+async function saveHome() {
+
+    try {
+
+        await insertData(
+            "site_settings",
+            {
+                title:
+                    document
+                    .getElementById("homeTitle")
+                    .value,
+
+                notice:
+                    document
+                    .getElementById("homeNotice")
+                    .value
+            }
+        );
+
+        showMessage("✅ 홈 저장 완료");
+
+    } catch(error) {
+
+        console.error(error);
+
+        showMessage("❌ 홈 저장 실패");
+    }
 }
 
+
+/* =========================
+   경기
+========================= */
+
+async function saveGame() {
+
+    try {
+
+        await insertData(
+            "games",
+            {
+                game_date:
+                    document
+                    .getElementById("gameDate")
+                    .value,
+
+                team1:
+                    document
+                    .getElementById("gameTeam1")
+                    .value,
+
+                score1:
+                    Number(
+                        document
+                        .getElementById("gameScore1")
+                        .value
+                    ),
+
+                team2:
+                    document
+                    .getElementById("gameTeam2")
+                    .value,
+
+                score2:
+                    Number(
+                        document
+                        .getElementById("gameScore2")
+                        .value
+                    ),
+
+                description:
+                    document
+                    .getElementById("gameDescription")
+                    .value
+            }
+        );
+
+        showMessage("✅ 경기 저장 완료");
+
+    } catch(error) {
+
+        console.error(error);
+
+        showMessage("❌ 경기 저장 실패");
+    }
+}
+
+
+/* =========================
+   일정
+========================= */
+
+async function saveSchedule() {
+
+    try {
+
+        await insertData(
+            "schedules",
+            {
+                game_date:
+                    document
+                    .getElementById("scheduleDate")
+                    .value,
+
+                game_time:
+                    document
+                    .getElementById("scheduleTime")
+                    .value,
+
+                team1:
+                    document
+                    .getElementById("scheduleTeam1")
+                    .value,
+
+                team2:
+                    document
+                    .getElementById("scheduleTeam2")
+                    .value
+            }
+        );
+
+        showMessage("✅ 일정 저장 완료");
+
+    } catch(error) {
+
+        console.error(error);
+
+        showMessage("❌ 일정 저장 실패");
+    }
+}
+
+
+/* =========================
+   순위
+========================= */
+
+async function saveStanding() {
+
+    try {
+
+        await insertData(
+            "standings",
+            {
+                team:
+                    document
+                    .getElementById("standingTeam")
+                    .value,
+
+                wins:
+                    Number(
+                        document
+                        .getElementById("standingWins")
+                        .value
+                    ),
+
+                draws:
+                    Number(
+                        document
+                        .getElementById("standingDraws")
+                        .value
+                    ),
+
+                losses:
+                    Number(
+                        document
+                        .getElementById("standingLosses")
+                        .value
+                    ),
+
+                points:
+                    Number(
+                        document
+                        .getElementById("standingPoints")
+                        .value
+                    )
+            }
+        );
+
+        showMessage("✅ 순위 저장 완료");
+
+    } catch(error) {
+
+        console.error(error);
+
+        showMessage("❌ 순위 저장 실패");
+    }
+}
+
+
+/* =========================
+   팀
+========================= */
+
+async function saveTeam() {
+
+    try {
+
+        await insertData(
+            "teams",
+            {
+                name:
+                    document
+                    .getElementById("teamName")
+                    .value,
+
+                color:
+                    document
+                    .getElementById("teamColor")
+                    .value,
+
+                description:
+                    document
+                    .getElementById("teamDescription")
+                    .value
+            }
+        );
+
+        showMessage("✅ 팀 저장 완료");
+
+    } catch(error) {
+
+        console.error(error);
+
+        showMessage("❌ 팀 저장 실패");
+    }
+}
+
+
+/* =========================
+   선수
+========================= */
+
+async function savePlayer() {
+
+    try {
+
+        await insertData(
+            "players",
+            {
+                name:
+                    document
+                    .getElementById("playerName")
+                    .value,
+
+                team:
+                    document
+                    .getElementById("playerTeam")
+                    .value,
+
+                position:
+                    document
+                    .getElementById("playerPosition")
+                    .value,
+
+                description:
+                    document
+                    .getElementById("playerDescription")
+                    .value
+            }
+        );
+
+        showMessage("✅ 선수 저장 완료");
+
+    } catch(error) {
+
+        console.error(error);
+
+        showMessage("❌ 선수 저장 실패");
+    }
+}
+
+
+/* =========================
+   기록
+========================= */
+
+async function saveRecord() {
+
+    try {
+
+        await insertData(
+            "records",
+            {
+                player:
+                    document
+                    .getElementById("recordPlayer")
+                    .value,
+
+                team:
+                    document
+                    .getElementById("recordTeam")
+                    .value,
+
+                hits:
+                    Number(
+                        document
+                        .getElementById("recordHits")
+                        .value
+                    ),
+
+                home_runs:
+                    Number(
+                        document
+                        .getElementById("recordHomeRuns")
+                        .value
+                    ),
+
+                rbi:
+                    Number(
+                        document
+                        .getElementById("recordRBI")
+                        .value
+                    )
+            }
+        );
+
+        showMessage("✅ 기록 저장 완료");
+
+    } catch(error) {
+
+        console.error(error);
+
+        showMessage("❌ 기록 저장 실패");
+    }
+}
+
+
+/* =========================
+   뉴스
+========================= */
+
+async function saveNews() {
+
+    try {
+
+        await insertData(
+            "news",
+            {
+                news_date:
+                    document
+                    .getElementById("newsDate")
+                    .value,
+
+                title:
+                    document
+                    .getElementById("newsTitle")
+                    .value,
+
+                content:
+                    document
+                    .getElementById("newsContent")
+                    .value
+            }
+        );
+
+        showMessage("✅ 뉴스 저장 완료");
+
+    } catch(error) {
+
+        console.error(error);
+
+        showMessage("❌ 뉴스 저장 실패");
+    }
+}
+
+
+/* =========================
+   메시지
+========================= */
+
+function showMessage(text) {
+
+    document
+        .getElementById("message")
+        .innerText = text;
 }
 
 </script>
